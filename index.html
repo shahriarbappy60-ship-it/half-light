@@ -581,6 +581,116 @@ footer .row2{
   .inter .say .w{opacity:1;transform:none;filter:none}
   .lead .w{opacity:1}
 }
+
+/* =========================================================
+   HALF LIGHT — EDITORIAL REFINEMENT / 2026-10
+   Structural overrides: image and typography have separate fields.
+========================================================= */
+.hero{
+  height:auto;height:auto;min-height:0;
+  display:grid;grid-template-columns:minmax(0,1fr);
+  grid-template-rows:minmax(360px,66svh) auto auto auto;
+  overflow:visible;
+  background:var(--bg);
+}
+.hero .stage{
+  position:relative;inset:auto;grid-row:1;
+  width:100%;height:100%;min-height:360px;overflow:hidden;
+}
+.hero .stage img{
+  transform:scale(1.045);
+  object-position:62% 68%;
+}
+.hero.on .stage img{transform:scale(1);filter:brightness(1) saturate(.94) contrast(1.03)}
+.hero .stage::after{
+  background:linear-gradient(180deg,rgba(15,14,12,.04) 0%,rgba(15,14,12,.02) 50%,rgba(15,14,12,.14) 100%);
+}
+.hero .h-in{
+  position:relative;inset:auto;grid-row:2;z-index:2;
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  padding:clamp(30px,5vw,70px) var(--pad) clamp(24px,3.5vw,44px);
+  background:var(--bg);
+}
+.hero .kicker{
+  margin:0 0 clamp(18px,2.4vw,30px);
+  opacity:1;transform:none;transition:none;
+  color:var(--mute);font-size:10px;letter-spacing:.22em;
+}
+.hero .kicker i{width:28px;background:var(--amber)}
+.hero h1{
+  display:flex;flex-wrap:wrap;gap:0 .22em;
+  width:100%;font-size:clamp(68px,12.6vw,184px);
+  line-height:.78;letter-spacing:-.035em;
+}
+.hero h1 .ln{overflow:visible;line-height:.9}
+.hero h1 .ch{transform:none;transition:none}
+.hero h1 .ln:nth-child(2) .ch{color:var(--amber)}
+.hero .meta{
+  position:relative;right:auto;bottom:auto;grid-row:3;z-index:2;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  text-align:left;padding:0 var(--pad) clamp(28px,4vw,52px);
+  color:var(--mute);font-size:10px;letter-spacing:.16em;line-height:1.6;
+  opacity:1;transition:none;
+}
+.hero .cue{
+  position:relative;left:auto;bottom:auto;transform:none;grid-row:4;
+  justify-self:start;align-items:flex-start;gap:8px;
+  padding:0 var(--pad) clamp(30px,5vw,58px);
+  color:var(--mute);opacity:1;transition:none;
+}
+.hero .cue i{height:24px;background:var(--line)}
+.hero .cue i::after{animation:none}
+.head{gap:clamp(20px,4vw,56px)}
+.head p{max-width:30ch}
+.cap{margin-top:13px;padding-bottom:2px}
+.cap b{font-size:clamp(16px,1.3vw,19px)}
+.cap span{font-size:9.5px;letter-spacing:.2em}
+.plate{border-radius:1px}
+.plate::after{background:linear-gradient(135deg,rgba(0,0,0,.02),transparent 45%,rgba(0,0,0,.08))}
+.card{border-radius:1px;background:transparent;padding:clamp(22px,2.6vw,40px)}
+.row>*{grid-row:auto}
+.inter{min-height:48vh}
+.inter .say{max-width:18ch}
+footer{border-top:1px solid var(--line)}
+@media (min-width:901px){
+  .hero{grid-template-rows:minmax(420px,64svh) auto auto auto}
+  .hero .stage{min-height:420px}
+  .hero .h-in{padding-top:clamp(38px,4.5vw,66px);padding-bottom:clamp(26px,3vw,40px)}
+  .hero h1{font-size:clamp(90px,12vw,176px)}
+  .hero .meta{max-width:100%;font-size:10px}
+  .hero .cue{padding-bottom:34px}
+  .row.bleed{margin-top:clamp(8px,2vw,28px)}
+}
+@media (max-width:900px){
+  .hero{grid-template-rows:minmax(300px,52svh) auto auto auto}
+  .hero .stage{min-height:300px}
+  .hero .stage img{object-position:62% 70%}
+  .hero .h-in{padding:30px var(--pad) 18px}
+  .hero .kicker{font-size:9px;letter-spacing:.16em;gap:10px;margin-bottom:18px}
+  .hero h1{font-size:clamp(62px,15.2vw,112px);line-height:.82;gap:0 .17em}
+  .hero .meta{padding:0 var(--pad) 24px;font-size:9px;letter-spacing:.11em}
+  .hero .cue{padding:0 var(--pad) 28px;font-size:9px}
+  .hero .cue i{height:18px}
+  .row>*{grid-row:auto;min-width:0}
+  .row .a,.row .b,.row figure{width:100%;min-width:0}
+  .r1 .b{margin-top:18px}
+  .cap{gap:12px;flex-wrap:wrap}
+  .cap span{white-space:nowrap}
+}
+@media (max-width:480px){
+  .hero{grid-template-rows:minmax(270px,44svh) auto auto auto}
+  .hero .stage{min-height:270px}
+  .hero .h-in{padding-top:26px;padding-bottom:14px}
+  .hero h1{font-size:clamp(56px,15vw,76px);letter-spacing:-.045em}
+  .hero .meta{font-size:8.5px;letter-spacing:.08em}
+  .hero .cue{padding-bottom:24px}
+  .head h2{font-size:clamp(42px,12vw,58px)}
+  .inter .say{max-width:13ch}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero .stage img{transform:none!important}
+}
+
 </style>
 
 </head>
