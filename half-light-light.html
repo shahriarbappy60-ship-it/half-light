@@ -860,7 +860,7 @@ document.querySelectorAll('.entry').forEach(function(d){
 });
 
 /* ——— viewer / projector ——— */
-var plates=[].slice.call(document.querySelectorAll('.plate'));
+var plates=[].slice.call(document.querySelectorAll('#frames .plate'));
 plates.forEach(function(p){p.tabIndex=0;p.setAttribute('role','button');p.setAttribute('aria-label','View: '+p.dataset.cap)});
 var lb=document.getElementById('lb'),lbi=document.getElementById('lbi'),lbcap=document.getElementById('lbcap'),lbcnt=document.getElementById('lbcnt'),sh=document.getElementById('share'),cur=0,opener=null;
 function show(n){
