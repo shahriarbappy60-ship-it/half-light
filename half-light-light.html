@@ -84,7 +84,9 @@ body.cur-hide .cur,body.cur-hide .cur2{opacity:0}
   background:#f0ece4;
   display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;
   transition:transform 1s var(--ease2) .1s,visibility 0s 1.2s;
+  animation:pre-failsafe 0s 6s forwards;
 }
+@keyframes pre-failsafe{to{transform:translateY(-101%);visibility:hidden}}
 #pre.done{transform:translateY(-101%);visibility:hidden}
 #pre .word{
   display:flex;gap:.05em;
@@ -582,7 +584,7 @@ footer .row2{
 </style>
 
 </head>
-<body class="locked">
+<body>
 
 <div id="pre" aria-hidden="true">
   <div class="word"><span>H</span><span>a</span><span>l</span><span>f</span><span>&nbsp;</span><span>L</span><span>i</span><span>g</span><span>h</span><span>t</span></div>
@@ -603,7 +605,7 @@ footer .row2{
   <div class="stage plate" data-cap="Cloud at dusk"><div class="im"><img data-key="img0" alt="A dark cloud at dusk, edged with amber light, with a face-like shape"></div></div>
   <div class="h-in">
     <p class="kicker"><i></i>Photographs &amp; unfinished stories</p>
-    <h1 aria-label="Half Light"><span class="ln" data-txt="Half"></span><span class="ln" data-txt="Light"></span></h1>
+    <h1 aria-label="Half Light"><span class="ln" data-txt="Half">Half</span><span class="ln" data-txt="Light">Light</span></h1>
   </div>
   <div class="meta">Just before dark<br>f/1.8 — 19:42 — ISO 200</div>
   <div class="cue">Scroll<i></i></div>
@@ -739,21 +741,33 @@ document.querySelectorAll('.hero h1 .ln').forEach(function(ln){
 
 /* ——— preloader ——— */
 var pre=document.getElementById('pre'),pct=document.getElementById('prepct'),prebar=document.getElementById('prebar');
-var keys=Object.keys(IMGS),loaded=0,p=0,finished=false;
-function step(){
-  p+=(loaded/keys.length*100-p)*.12+0.4;
-  if(p>100)p=100;
-  pct.textContent=Math.round(p)+'%';prebar.style.setProperty('--p',p/100);
-  if(p>=99.5&&!finished){finished=true;finish();return}
-  requestAnimationFrame(step);
-}
+var keys=Object.keys(IMGS),loaded=0,succeeded=0,failed=0,p=0,finished=false,raf=0,failsafe=0;
 function finish(){
+  if(finished)return;
+  finished=true;
+  if(raf)cancelAnimationFrame(raf);
+  if(failsafe)clearTimeout(failsafe);
+  if(failed)pre.dataset.imageFailures=failed;
   pre.classList.add('done');
   document.body.classList.remove('locked');
-  setTimeout(function(){document.getElementById('hero').classList.add('on')},420);
+  setTimeout(function(){var hero=document.getElementById('hero');if(hero)hero.classList.add('on')},420);
 }
-keys.forEach(function(k){var im=new Image();im.onload=im.onerror=function(){loaded++};im.src=IMGS[k]});
-setTimeout(function(){if(!finished){finished=true;finish()}},4200); /* failsafe */
+function step(){
+  if(finished)return;
+  var target=keys.length?loaded/keys.length*100:100;
+  p+=(target-p)*.12;
+  if(loaded===keys.length)p=100;
+  pct.textContent=Math.round(p)+'%';prebar.style.setProperty('--p',p/100);
+  if(loaded===keys.length){finish();return}
+  raf=requestAnimationFrame(step);
+}
+keys.forEach(function(k){
+  var im=new Image();
+  im.onload=function(){succeeded++;loaded++};
+  im.onerror=function(){failed++;loaded++};
+  im.src=IMGS[k];
+});
+failsafe=setTimeout(finish,4200);
 step();
 
 /* ——— custom cursor ——— */
